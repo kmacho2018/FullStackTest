@@ -9,7 +9,7 @@ namespace FullStackTest.Domain.Services
 {
     public interface IMovieRepository
     {
-        Task<IEnumerable<Movie>> GetMovies();
+        Task<IEnumerable<Movie>> GetMovies(string sort,int skip,int take,string movieName);
 
         Task<Movie> GetMovieById(int movieId);
         Task<Movie> GetMovieByName(string name);

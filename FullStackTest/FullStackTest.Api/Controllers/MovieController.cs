@@ -19,14 +19,47 @@ namespace FullStackTest.Api.Controllers
             this.movieRepository = movieRepository;
             _logger = logger;
         }
+
         [Route("GetAllMovies")]
         [HttpGet]
         public async Task<ActionResult> GetMovies()
         {
             try
             {
+                int take = 100, skip = 0;
+                string sort = "Asc";
+                string movieName=string.Empty;
+                if (this.Request != null)
+                {
+                    var queryString = this.Request.Query;
+
+                    if (queryString.Any())
+                    {
+                        if (queryString.Any(x => x.Key == "Take"))
+                        {
+                            take = int.Parse(queryString.FirstOrDefault(x => x.Key == "Take").Value);
+                        }
+
+                        if (queryString.Any(x => x.Key == "Skip"))
+                        {
+                            skip = int.Parse(queryString.FirstOrDefault(x => x.Key == "Skip").Value);
+                        }
+
+                        if (queryString.Any(x => x.Key == "Sort"))
+                        {
+                            sort = queryString.FirstOrDefault(x => x.Key == "Sort").Value;
+                        }
+
+                        if (queryString.Any(x => x.Key == "MovieName"))
+                        {
+                            movieName = queryString.FirstOrDefault(x => x.Key == "MovieName").Value;
+                        }
+                    }
+
+                }
                 _logger.LogInformation("Start to GetMovies");
-                return Ok(await movieRepository.GetMovies());
+                return Ok(await movieRepository.GetMovies(sort, skip, take,movieName));
+
             }
             catch (Exception ex)
             {

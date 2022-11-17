@@ -49,9 +49,31 @@ namespace FullStackTest.Domain.Services
                                     .FirstOrDefaultAsync(e => e.Name == name);
         }
 
-        public async Task<IEnumerable<Movie>> GetMovies()
+        public async Task<IEnumerable<Movie>> GetMovies(string sort, int skip, int take, string movieName)
         {
-            return await movieDBContext.Movie.ToListAsync();
+            if (string.IsNullOrEmpty(movieName) || string.IsNullOrWhiteSpace(movieName))
+            {
+                if (sort == "Asc")
+                {
+                    return await movieDBContext.Movie.Skip(skip).Take(take).OrderBy(x => x.Name).ToListAsync();
+                }
+                else
+                {
+                    return await movieDBContext.Movie.Skip(skip).Take(take).OrderByDescending(x => x.Name).ToListAsync();
+                }
+            }
+            else
+            {
+                if (sort == "Asc")
+                {
+                    return await movieDBContext.Movie.Where(x=>x.Name.Contains(movieName)).Skip(skip).Take(take).OrderBy(x => x.Name).ToListAsync();
+                }
+                else
+                {
+                    return await movieDBContext.Movie.Where(x => x.Name.Contains(movieName)).Skip(skip).Take(take).OrderByDescending(x => x.Name).ToListAsync();
+                }
+            }
+
         }
 
         public async Task<Movie> UpdateMovie(Movie movie)

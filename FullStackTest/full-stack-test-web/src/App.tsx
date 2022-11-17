@@ -1,48 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import styled from '@emotion/styled'
-
-const Button = styled.button`
-  padding: 32px;
-  background-color: hotpink;
-  font-size: 24px;
-  border-radius: 4px;
-  color: black;
-  font-weight: bold;
-  &:hover {
-    color: white;
-  }
-`
-
+import {} from '@chakra-ui/icons';
+import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import Column from './components/Column';
+import DarkModeIconButton from './components/DarkModeIconButton';
+import { ColumnType } from './utils/enums';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      <Button>This my button component.</Button>
-      <SkeletonTheme baseColor="#202020" highlightColor="#444">
-        <p>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-            <Skeleton count={3} />
-        </p>
-    </SkeletonTheme>
-        
-       
-      </header>
-    </div>
+    <main>
+      <Heading
+        fontSize={{ base: '4xl', sm: '5xl', md: '6xl' }}
+        fontWeight="bold"
+        textAlign="center"
+        bgGradient="linear(to-l, #7928CA, #FF0080)"
+        bgClip="text"
+        mt={4}
+      >
+        FullStack Test  Kanban Board
+      </Heading>
+      <DarkModeIconButton position="absolute" top={0} right={2} />
+      <DndProvider backend={HTML5Backend}>
+        <Container maxWidth="container.lg" px={4} py={10}>
+          <SimpleGrid
+            columns={{ base: 1, md: 3 }}
+            spacing={{ base: 16, md: 3 }}
+          >
+            <Column column={ColumnType.TO_DO} />
+            <Column column={ColumnType.IN_PROGRESS} />
+            <Column column={ColumnType.COMPLETED} />
+          </SimpleGrid>
+        </Container>
+      </DndProvider>
+    </main>
   );
 }
 

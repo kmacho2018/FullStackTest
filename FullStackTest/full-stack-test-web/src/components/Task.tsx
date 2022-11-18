@@ -37,8 +37,7 @@ function Task({
 
   const handleDeleteClick = () => {
     confirmAlert({
-      title: 'Confirm to submit',                        // Title dialog
-      message: 'Are you sure to do this.',               // Message dialog
+      message: 'Are you sure to delete this?',               // Message dialog
       buttons: [
         {
           label: 'Yes',
@@ -59,11 +58,6 @@ function Task({
 
   return (
     <ScaleFade in={true} unmountOnExit>
-       <SkeletonTheme baseColor="#202020" highlightColor="#444" duration={5}>
-        <p>
-            <Skeleton count={3} duration={5} />
-        </p>
-    </SkeletonTheme>
       <Box
         ref={ref}
         as="div"

@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import App from './App';
 import theme from './config/theme';
 import reportWebVitals from './reportWebVitals';
@@ -8,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <App />
+            <App />
     </ChakraProvider>
   </React.StrictMode>,
 );

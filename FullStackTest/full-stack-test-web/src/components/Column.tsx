@@ -18,7 +18,11 @@ const ColumnColorScheme: Record<ColumnType, string> = {
   Completed: 'green',
 };
 
-function Column({ column }: { column: ColumnType }) {
+function Column({ column, titulo }: { column: ColumnType, titulo : string }) {
+  const resultado =  useColumnTasks(column);
+  if(titulo!=''){
+    resultado.tasks = resultado.tasks.filter(obj=>obj.title.toUpperCase().includes(titulo.toUpperCase()));
+  }
   const {
     tasks,
     addEmptyTask,
@@ -26,7 +30,7 @@ function Column({ column }: { column: ColumnType }) {
     dropTaskFrom,
     swapTasks,
     updateTask,
-  } = useColumnTasks(column);
+  }  = resultado;
 
   const { dropRef, isOver } = useColumnDrop(column, dropTaskFrom);
 
